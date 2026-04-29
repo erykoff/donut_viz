@@ -1,0 +1,13 @@
+description: donut viz pipeline tasks
+
+tasks:
+  aggregateZernikeIntraTablesTask:
+    class: lsst.donut.viz.AggregateZernikeTablesTask
+    config:
+      connections.aggregateZernikesRaw: aggregateZernikesIntraRaw
+      connections.aggregateZernikesAvg: aggregateZernikesIntraAvg
+  aggregateZernikeExtraTablesTask:
+    class: lsst.donut.viz.AggregateZernikeTablesTask
+    config:
+      connections.aggregateZernikesRaw: aggregateZernikesExtraRaw
+      connections.aggregateZernikesAvg: aggregateZernikesExtraAvg

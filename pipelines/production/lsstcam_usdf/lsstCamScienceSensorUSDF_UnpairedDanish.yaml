@@ -1,0 +1,33 @@
+description: rapid analysis pipeline for LSSTCam
+instrument: lsst.obs.lsst.LsstCam
+imports:
+  - location: $DONUT_VIZ_DIR/pipelines/production/lsstCamScienceSensorRapidAnalysisPipeline_UnpairedDanish.yaml
+tasks:
+  generateDonutDirectDetectTask:
+    class: lsst.ts.wep.task.generateDonutDirectDetectTask.GenerateDonutDirectDetectTask
+    config:
+      donutSelector.sourceLimit: 40
+  calcZernikesUnpairedIntraTask:
+    class: lsst.ts.wep.task.calcZernikesUnpairedTask.CalcZernikesUnpairedTask
+    config:
+      donutStampSelector.maxSelect: 20
+  calcZernikesUnpairedExtraTask:
+    class: lsst.ts.wep.task.calcZernikesUnpairedTask.CalcZernikesUnpairedTask
+    config:
+      donutStampSelector.maxSelect: 20
+
+# Define pipeline steps
+subsets:
+  step1a-detectors:
+    subset:
+      - isr
+      - generateDonutDirectDetectTask
+      - cutOutDonutsScienceSensorGroupTask
+  step1b-visits:
+    subset:
+      - calcZernikesUnpairedIntraTask
+      - calcZernikesUnpairedExtraTask
+  step2-visits:
+    subset:
+      - aggregateZernikeIntraTablesTask
+      - aggregateZernikeExtraTablesTask

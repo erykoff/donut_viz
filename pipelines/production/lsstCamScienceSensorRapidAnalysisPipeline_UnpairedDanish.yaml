@@ -1,0 +1,5 @@
+description: rapid analysis pipeline for LSSTCam
+instrument: lsst.obs.lsst.LsstCam
+imports:
+  - $DONUT_VIZ_DIR/pipelines/_ingredients/wepDirectDetectScienceGroupUnpairedPipeline.yaml
+  - $DONUT_VIZ_DIR/pipelines/_ingredients/donutVizGroupUnpairedPipeline.yaml
