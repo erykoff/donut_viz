@@ -4,7 +4,7 @@ imports:
   - $DONUT_VIZ_DIR/pipelines/_ingredients/danishCalcZernikesBase.yaml
 
 tasks:
-  generateBlitzDirectDetectTask:
+  generateDonutBlitzDetectTask:
     class: lsst.ts.wep.task.generateDonutBlitzDetectTask.GenerateDonutBlitzDetectTask
     config:
       connections.exposure: post_isr_image
