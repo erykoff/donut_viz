@@ -1,0 +1,26 @@
+description: wep direct detect pipeline for wavefront sensors
+imports:
+  - $DONUT_VIZ_DIR/pipelines/_ingredients/aosBaseIsr.yaml
+  - $DONUT_VIZ_DIR/pipelines/_ingredients/danishCalcZernikesBase.yaml
+
+tasks:
+  generateBlitzDirectDetectTask:
+    class: lsst.ts.wep.task.generateDonutBlitzDetectTask.GenerateDonutBlitzDetectTask
+    config:
+      connections.exposure: post_isr_image
+      donutSelector.useCustomMagLimit: True
+      donutSelector.sourceLimit: 20
+      donutSelector.maxFieldDist: 1.725
+  cutOutDonutsCwfsPairTask:
+    class: lsst.ts.wep.task.cutOutDonutsCwfsTask.CutOutDonutsCwfsTask
+    config:
+      connections.exposure: post_isr_image
+      # And here we specify the configuration settings originally defined in
+      # CutOutDonutsCwfsTaskConfig.
+      # Test CWFS pipeline works when specifying instrument parameters.
+      donutStampSize: 160
+      initialCutoutPadding: 40
+  reassignCwfsCutoutsPairTask:
+    class: lsst.ts.wep.task.reassignCwfsCutoutsTask.ReassignCwfsCutoutsTask
+    config:
+      customQG: True
